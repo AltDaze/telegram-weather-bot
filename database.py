@@ -1,6 +1,16 @@
 import sqlite3
 
 class Database():
+
+    # def addToDB(id):
+    # with sqlite3.connect('db.db') as conn:
+    #     cur = conn.cursor()
+    #     cur.execute(f'SELECT COUNT(`id`) FROM `tgbot` WHERE `user_id` = {id}')
+
+    #     if cur.fetchone()[0] == 0:
+    #         cur.execute(f'INSERT INTO `tgbot` (`user_id`) VALUES ({id})')
+    #         conn.commit()
+            
     def DatabaseConnect(func):
         def Connect():
             conn = sqlite3.connect('users.db')
@@ -11,10 +21,10 @@ class Database():
         return Connect()
 
 
-    def NewUser(id, lang):
+    def NewUser(user_id, lang):
         conn = sqlite3.connect('users.db')
         cur = conn.cursor()
-        cur.execute("INSERT INTO users (user_id, language) VALUES (%s, '%s')" % (id, lang))
+        cur.execute("INSERT INTO users (user_id, language) VALUES (%s, '%s')" % (user_id, lang))
         conn.commit()
         cur.close()
 
@@ -41,34 +51,34 @@ class Database():
         cur.execute('create table users (ID INTEGER PRIMARY KEY AUTOINCREMENT, USER_ID int, CITY text, LANGUAGE text)')
 
 
-    def Language(id):
+    def Language(user_id):
         conn = sqlite3.connect('users.db')
         cur = conn.cursor()
-        cur.execute("SELECT language FROM users WHERE user_id = %s" % id)
+        cur.execute("SELECT language FROM users WHERE user_id = %s" % user_id)
         lang = cur.fetchone()
         return lang[0]
 
 
-    def City(id):
+    def City(user_id):
         conn = sqlite3.connect('users.db')
         cur = conn.cursor()
-        cur.execute("SELECT city FROM users WHERE user_id = %s" % id)
+        cur.execute("SELECT city FROM users WHERE user_id = %s" % user_id)
         city = cur.fetchone()
         return city[0]
 
 
-    def DeleteUser(id):
+    def DeleteUser(user_id):
         conn = sqlite3.connect('users.db')
         cur = conn.cursor()
-        cur.execute("DELETE FROM users WHERE user_id = %s" % id)
+        cur.execute("DELETE FROM users WHERE user_id = %s" % user_id)
         conn.commit()
         cur.close()
 
 
-    def UpdateLanguage(lang, id):
+    def UpdateLanguage(lang, user_id):
         conn = sqlite3.connect('users.db')
         cur = conn.cursor()
-        cur.execute("UPDATE users SET LANGUAGE = '%s' WHERE USER_ID = %s" % (lang, id))
+        cur.execute("UPDATE users SET LANGUAGE = '%s' WHERE USER_ID = %s" % (lang, user_id))
         conn.commit()
         cur.close()
 
@@ -76,6 +86,6 @@ class Database():
     def UpdateCity(city, id):
         conn = sqlite3.connect('users.db')
         cur = conn.cursor()
-        cur.execute("UPDATE users SET CITY = '%s' WHERE USER_ID = %s" % (city, id))
+        cur.execute("UPDATE users SET CITY = '%s' WHERE USER_ID = %s" % (city, user_id))
         conn.commit()
         cur.close()
