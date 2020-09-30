@@ -143,7 +143,7 @@ def Location(message):
     lon = message.location.longitude
     bot.send_message(message.chat.id, Weather.today([lat, lon], lang), reply_markup = DefaultButtons(lang))
 
-    r = requests.get('http://api.openweathermap.org/data/2.5/weather?&units=metric&lat=%s&lon=%s&appid=0c9f3c052f1d81b7062750ff0926f345' % (lat, lot))
+    r = requests.get('http://api.openweathermap.org/data/2.5/weather?&units=metric&lat=%s&lon=%s&appid=0c9f3c052f1d81b7062750ff0926f345' % (lat, lon))
     data = r.json()
     city = data["name"]
     db.UpdateCity(city, message.from_user.id)
